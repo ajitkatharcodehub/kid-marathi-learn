@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Marathi Alphabet Tracing Fun</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <button id="btn-speak" class="action-btn speak-btn" title="Speak Letter">🔊 Say It!</button>
+        </header>
+        
+        <main class="canvas-container">
+            <canvas id="tracing-canvas"></canvas>
+            <div id="success-message" class="hidden">Great Job! 🎉</div>
+        </main>
+        
+        <div id="game-section" class="game-container hidden">
+            <div class="picture-card" data-index="0"></div>
+            <div class="picture-card" data-index="1"></div>
+            <div class="picture-card" data-index="2"></div>
+        </div>
+        
+        <footer>
+            <button id="btn-prev" class="nav-btn">◀ Previous</button>
+            <button id="btn-clear" class="action-btn clear-btn">🧹 Clear</button>
+            <button id="btn-next" class="nav-btn">Next ▶</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

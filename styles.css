@@ -1,0 +1,217 @@
+:root {
+    --bg-color: #f0f8ff;
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --text-color: #2d3436;
+    --canvas-bg: #ffffff;
+    --letter-color: #e0e0e0;
+    --draw-color: #ff9f43;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none; /* Prevent text selection while tracing */
+    -webkit-touch-callout: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Baloo 2', 'Fredoka One', cursive, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Prevent scrolling on touch */
+}
+
+.app-container {
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.canvas-container {
+    flex-grow: 1;
+    position: relative;
+    background-color: var(--canvas-bg);
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid var(--secondary-color);
+}
+
+canvas {
+    touch-action: none; /* Crucial for pointer events on mobile */
+    cursor: crosshair;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+button {
+    font-family: 'Baloo 2', 'Fredoka One', cursive, sans-serif;
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+    color: white;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-btn {
+    background-color: var(--secondary-color);
+}
+
+.action-btn {
+    background-color: var(--primary-color);
+}
+
+.speak-btn {
+    font-size: 1.5rem;
+    padding: 15px 30px;
+    background-color: #feca57;
+    color: #2d3436;
+}
+
+#success-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: #ff9f43;
+    text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+    pointer-events: none;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes popIn {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+    height: 120px;
+}
+
+.picture-card {
+    flex: 1;
+    max-width: 120px;
+    background-color: white;
+    border: 4px solid var(--secondary-color);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    padding: 5px;
+}
+
+.emoji-icon {
+    font-size: 3.5rem;
+    line-height: 1.1;
+}
+
+.emoji-word {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+    line-height: 1;
+}
+
+.picture-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.picture-card:active {
+    transform: translateY(0);
+}
+
+.card-correct {
+    border-color: #2ecc71 !important;
+    animation: popBounce 0.5s ease;
+}
+
+.card-wrong {
+    border-color: #e74c3c !important;
+    animation: shake 0.4s ease;
+}
+
+@keyframes popBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+@media (max-width: 600px) {
+    button {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+    .speak-btn {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+    .picture-card {
+        max-width: 90px;
+        padding: 5px;
+    }
+    .emoji-icon {
+        font-size: 2.5rem;
+    }
+    .emoji-word {
+        font-size: 1rem;
+    }
+    .game-container {
+        height: 110px;
+    }
+}
