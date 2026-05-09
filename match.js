@@ -199,6 +199,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }, 2000);
             }
+        } else if (dropTarget === draggingNode) {
+            // It was just a click/tap on the item, play its pronunciation
+            const letterIndex = letters.indexOf(draggingNode.dataset.letter);
+            if(letterIndex !== -1) {
+                const audio = new Audio(`audio/${letterIndex}.mp3`);
+                audio.play().catch(e => console.log(e));
+            }
+            
+            // Add a temporary pop animation to give visual feedback
+            draggingNode.classList.remove('popBounce');
+            void draggingNode.offsetWidth; // trigger reflow
+            draggingNode.classList.add('popBounce');
         }
         
         activeLine = null;
