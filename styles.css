@@ -23,8 +23,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
     overflow: hidden; /* Prevent scrolling on touch */
+}
+
+html {
+    height: -webkit-fill-available;
 }
 
 .app-container {
@@ -37,6 +42,37 @@ body {
     gap: 10px;
 }
 
+/* Top Tabs Navigation */
+.top-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 10px 5px 10px;
+}
+
+.tab-link {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: 3px solid var(--secondary-color);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tab-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.tab-link.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
 header {
     display: flex;
     justify-content: center;
@@ -213,5 +249,98 @@ button:active {
     }
     .game-container {
         height: 110px;
+    }
+}
+
+/* Alphabet Overview Page Styles */
+.alphabet-page {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.alphabet-container {
+    max-width: 800px;
+    margin: 0 auto;
+    height: auto;
+    padding-bottom: 40px;
+}
+
+.alphabet-container header {
+    justify-content: space-between;
+}
+
+.page-title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.alphabet-section {
+    margin-top: 30px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 15px;
+}
+
+.alphabet-card {
+    background-color: white;
+    border: 3px solid var(--secondary-color);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: var(--text-color);
+    height: 80px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+    user-select: none;
+}
+
+.alphabet-card:hover {
+    transform: translateY(-3px);
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.alphabet-card:active {
+    transform: translateY(0);
+}
+
+.popBounce {
+    animation: popBounce 0.4s ease;
+}
+
+@media (max-width: 600px) {
+    .alphabet-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 10px;
+    }
+    .alphabet-card {
+        height: 60px;
+        font-size: 2rem;
+    }
+    .page-title {
+        font-size: 1.5rem;
+    }
+    .section-title {
+        font-size: 1.4rem;
     }
 }

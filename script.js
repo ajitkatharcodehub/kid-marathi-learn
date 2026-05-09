@@ -16,62 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.picture-card[data-index="2"]')
     ];
     
-    // State
-    const letters = [
-        "अ", "आ", "इ", "ई", "उ", "ऊ", "ए", "ऐ", "ओ", "औ", "अं", "अः",
-        "क", "ख", "ग", "घ", "च", "छ", "ज", "झ", "ट", "ठ", "ड", "ढ", "ण",
-        "त", "थ", "द", "ध", "न", "प", "फ", "ब", "भ", "म",
-        "य", "र", "ल", "व", "श", "ष", "स", "ह", "ळ", "क्ष", "ज्ञ"
-    ];
-    
-    const emojiMap = {
-        "अ": { emoji: "🍍", word: "अननस" },
-        "आ": { emoji: "🥭", word: "आंबा" },
-        "इ": { emoji: "🏢", word: "इमारत" },
-        "ई": { emoji: "🍋", word: "ईडलिंबू" },
-        "उ": { emoji: "🐁", word: "उंदीर" },
-        "ऊ": { emoji: "🎋", word: "ऊस" },
-        "ए": { emoji: "🐏", word: "एडका" },
-        "ऐ": { emoji: "🐘", word: "ऐरावत" },
-        "ओ": { emoji: "👄", word: "ओठ" },
-        "औ": { emoji: "💊", word: "औषध" },
-        "अं": { emoji: "🍇", word: "अंगूर" },
-        "अः": { emoji: "✨", word: "अः" },
-        "क": { emoji: "🪷", word: "कमळ" },
-        "ख": { emoji: "🪟", word: "खिडकी" },
-        "ग": { emoji: "🐄", word: "गाय" },
-        "घ": { emoji: "🏠", word: "घर" },
-        "च": { emoji: "🥄", word: "चमचा" },
-        "छ": { emoji: "☂️", word: "छत्री" },
-        "ज": { emoji: "🚢", word: "जहाज" },
-        "झ": { emoji: "🌲", word: "झाड" },
-        "ट": { emoji: "🍉", word: "टरबूज" },
-        "ठ": { emoji: "🛑", word: "ठसा" },
-        "ड": { emoji: "🥁", word: "डमरू" },
-        "ढ": { emoji: "☁️", word: "ढग" },
-        "ण": { emoji: "🏹", word: "बाण" },
-        "त": { emoji: "⚖️", word: "तराजू" },
-        "थ": { emoji: "💧", word: "थेंब" },
-        "द": { emoji: "🚪", word: "दरवाजा" },
-        "ध": { emoji: "🏹", word: "धनुष्य" },
-        "न": { emoji: "🚰", word: "नळ" },
-        "प": { emoji: "🪁", word: "पतंग" },
-        "फ": { emoji: "🍎", word: "फळ" },
-        "ब": { emoji: "🦆", word: "बदक" },
-        "भ": { emoji: "🎃", word: "भोपळा" },
-        "म": { emoji: "🐟", word: "मासा" },
-        "य": { emoji: "🔥", word: "यज्ञ" },
-        "र": { emoji: "🛣️", word: "रस्ता" },
-        "ल": { emoji: "🧄", word: "लसूण" },
-        "व": { emoji: "🌳", word: "वड" },
-        "श": { emoji: "🦅", word: "शहामृग" },
-        "ष": { emoji: "🛑", word: "षटकोन" },
-        "स": { emoji: "🐇", word: "ससा" },
-        "ह": { emoji: "🐘", word: "हत्ती" },
-        "ळ": { emoji: "👶", word: "बाळ" },
-        "क्ष": { emoji: "🦴", word: "क्ष-किरण" },
-        "ज्ञ": { emoji: "📚", word: "ज्ञान" }
-    };
+    // letters and emojiMap are now loaded from data.js
     
     let currentIndex = 0;
     let isDrawing = false;
@@ -240,16 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (coverage > 0.6) {
             successMessage.classList.remove('hidden');
             speakLetter();
-            // Wait a bit then go to next letter
+            // Wait a bit then hide the message, but do NOT automatically go to the next letter.
+            // The user must manually click 'Next' to proceed.
             setTimeout(() => {
-                if (currentIndex < letters.length - 1) {
-                    currentIndex++;
-                    drawLetter();
-                } else {
-                    // Reset or show completion
-                    currentIndex = 0;
-                    drawLetter();
-                }
+                successMessage.classList.add('hidden');
             }, 2000);
         }
     }
