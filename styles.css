@@ -344,3 +344,132 @@ button:active {
         font-size: 1.4rem;
     }
 }
+
+/* Match Pairs Game Styles */
+.match-page {
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    overflow: hidden;
+}
+
+.match-game-container {
+    flex-grow: 1;
+    position: relative;
+    background-color: var(--canvas-bg);
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border: 5px solid var(--secondary-color);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+    touch-action: none;
+}
+
+#match-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.match-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    z-index: 5;
+}
+
+.match-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 120px;
+}
+
+.match-item {
+    background-color: white;
+    border: 3px solid var(--secondary-color);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    height: 100px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.3s;
+    user-select: none;
+    z-index: 20; /* Keep above canvas to receive events */
+}
+
+.match-item:hover {
+    transform: translateY(-2px);
+}
+
+.match-item.matched {
+    opacity: 0.6;
+    pointer-events: none;
+    border-color: #2ecc71;
+}
+
+.letter-item {
+    font-size: 3.5rem;
+    color: var(--text-color);
+}
+
+.picture-item {
+    font-size: 3rem;
+    line-height: 1.1;
+}
+
+.connect-node {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    pointer-events: none; /* Let the parent card receive the click */
+}
+
+.node-right {
+    right: -10px;
+}
+
+.node-left {
+    left: -10px;
+}
+
+@media (max-width: 600px) {
+    .match-item {
+        height: 80px;
+        width: 90px;
+    }
+    .letter-item {
+        font-size: 2.5rem;
+    }
+    .picture-item .emoji-icon {
+        font-size: 2.5rem;
+    }
+    .connect-node {
+        width: 16px;
+        height: 16px;
+    }
+    .node-right {
+        right: -8px;
+    }
+    .node-left {
+        left: -8px;
+    }
+}
