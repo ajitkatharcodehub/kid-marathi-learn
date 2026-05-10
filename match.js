@@ -151,6 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
     }
 
+    function speakWord(index) {
+        if (index !== -1) {
+            const audio = new Audio(`audio/word_${index}.mp3`);
+            audio.play().catch(err => {
+                console.warn("Local audio failed, falling back to TTS:", err);
+                // Fallback to TTS if audio file is missing
+                const word = emojiMap[letters[index]].word;
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'mr-IN';
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+    }
+
     function handlePointerUp(e) {
         if (!draggingNode) return;
         container.releasePointerCapture(e.pointerId);
@@ -181,11 +195,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 draggingNode.classList.add('matched');
                 dropTarget.classList.add('matched');
                 
-                // Play audio
-                const letterIndex = letters.indexOf(draggingNode.dataset.letter);
+                // Play audio: Letter then Word
+                const letter = draggingNode.dataset.letter;
+                const letterIndex = letters.indexOf(letter);
+                const word = emojiMap[letter].word;
+                
                 if(letterIndex !== -1) {
                     const audio = new Audio(`audio/${letterIndex}.mp3`);
-                    audio.play().catch(e => console.log(e));
+                    audio.play().then(() => {
+                        // Wait a bit before saying the word
+                        setTimeout(() => speakWord(letterIndex), 800);
+                    }).catch(e => {
+                        console.log(e);
+                        speakWord(letterIndex);
+                    });
                 }
                 
                 checkWinCondition();
@@ -200,11 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 2000);
             }
         } else if (dropTarget === draggingNode) {
-            // It was just a click/tap on the item, play its pronunciation
-            const letterIndex = letters.indexOf(draggingNode.dataset.letter);
-            if(letterIndex !== -1) {
-                const audio = new Audio(`audio/${letterIndex}.mp3`);
-                audio.play().catch(e => console.log(e));
+            // It was just a click/tap on the item
+            const letter = draggingNode.dataset.letter;
+            
+            if (draggingNode.classList.contains('picture-item')) {
+                // Play word sound for pictures
+                const letterIndex = letters.indexOf(letter);
+                speakWord(letterIndex);
+            } else {
+                // Play letter sound for letters
+                const letterIndex = letters.indexOf(letter);
+                if(letterIndex !== -1) {
+                    const audio = new Audio(`audio/${letterIndex}.mp3`);
+                    audio.play().catch(e => console.log(e));
+                }
             }
             
             // Add a temporary pop animation to give visual feedback
