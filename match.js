@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const container = document.querySelector('.match-game-container');
     const successMessage = document.getElementById('success-message');
+    const feedbackMessage = document.getElementById('feedback-message');
+    let feedbackTimeout;
 
     let currentPairs = [];
     let lines = [];
@@ -165,6 +167,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function showFeedback(text, type) {
+        clearTimeout(feedbackTimeout);
+        feedbackMessage.textContent = text;
+        feedbackMessage.className = type; // e.g. 'correct' or 'wrong'
+        
+        feedbackTimeout = setTimeout(() => {
+            feedbackMessage.classList.add('hidden');
+        }, 1500);
+    }
+
     function handlePointerUp(e) {
         if (!draggingNode) return;
         container.releasePointerCapture(e.pointerId);
@@ -191,28 +203,31 @@ document.addEventListener('DOMContentLoaded', () => {
             
             lines.push(newLine);
             
+            // Universal Audio Feedback: Letter from left side then Word from right side
+            const leftItem = draggingNode.dataset.side === 'left' ? draggingNode : dropTarget;
+            const rightItem = draggingNode.dataset.side === 'right' ? draggingNode : dropTarget;
+            
+            const letterIndex = letters.indexOf(leftItem.dataset.letter);
+            const wordIndex = letters.indexOf(rightItem.dataset.letter);
+
+            if (letterIndex !== -1 && wordIndex !== -1) {
+                const audio = new Audio(`audio/${letterIndex}.mp3`);
+                audio.play().then(() => {
+                    // Wait a bit before saying the word
+                    setTimeout(() => speakWord(wordIndex), 800);
+                }).catch(e => {
+                    console.log(e);
+                    speakWord(wordIndex);
+                });
+            }
+
             if (isMatch) {
                 draggingNode.classList.add('matched');
                 dropTarget.classList.add('matched');
-                
-                // Play audio: Letter then Word
-                const letter = draggingNode.dataset.letter;
-                const letterIndex = letters.indexOf(letter);
-                const word = emojiMap[letter].word;
-                
-                if(letterIndex !== -1) {
-                    const audio = new Audio(`audio/${letterIndex}.mp3`);
-                    audio.play().then(() => {
-                        // Wait a bit before saying the word
-                        setTimeout(() => speakWord(letterIndex), 800);
-                    }).catch(e => {
-                        console.log(e);
-                        speakWord(letterIndex);
-                    });
-                }
-                
+                showFeedback('Correct! 🎉', 'correct');
                 checkWinCondition();
             } else {
+                showFeedback('Try again ❌', 'wrong');
                 // Wrong match: remove line after 2 seconds
                 setTimeout(() => {
                     const idx = lines.indexOf(newLine);
